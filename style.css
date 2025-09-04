@@ -203,3 +203,11 @@ button:hover {
     /* 内容更高、更易读 */
     z-index: 1000;
 }
+
+#creator {
+    text-align: center;
+    margin-top: 20px;
+    font-size: 1rem;
+    color: #555;
+    position: relative;
+}
