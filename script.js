@@ -28,7 +28,7 @@ document.getElementById("registerBtn").addEventListener("click", () => {
         return;
     }
 
-    fetch("http://127.0.0.1:5000/register", {
+    fetch("https://memory-match-backend.onrender.com/register", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ username: user, password: pass })
@@ -43,7 +43,7 @@ document.getElementById("loginBtn").addEventListener("click", () => {
     const user = document.getElementById("username").value.trim();
     const pass = document.getElementById("password").value;
 
-    fetch("http://127.0.0.1:5000/login", {
+    fetch("https://memory-match-backend.onrender.com/login", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ username: user, password: pass })
@@ -168,7 +168,7 @@ function checkGameEnd() {
         // 显示最终成绩
         document.getElementById("score").innerText = `Time: ${formatMs(elapsedMs)}`;
 
-        fetch("http://127.0.0.1:5000/submit", {
+        fetch("https://memory-match-backend.onrender.com/submit", {
             method: "POST",
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify({ username, ms: elapsedMs })
@@ -180,7 +180,7 @@ function checkGameEnd() {
 
 /* ====== 排行榜 ====== */
 function updateLeaderboard() {
-    fetch("http://127.0.0.1:5000/leaderboard")
+    fetch("https://memory-match-backend.onrender.com/leaderboard")
         .then(res => res.json())
         .then(data => {
             const lb = document.getElementById("leaderboard");
