@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="zh-CN">
+<html lang="en">
 
 <head>
     <meta charset="UTF-8">
@@ -9,25 +9,32 @@
 </head>
 
 <body>
-    <!-- Canvas 绘制背景 -->
+    <!-- Canvas Background -->
     <canvas id="mountain-canvas"></canvas>
 
     <div id="login-box">
-        <input type="text" id="username" placeholder="用户名">
-        <input type="password" id="password" placeholder="密码">
-        <button id="registerBtn">注册</button>
-        <button id="loginBtn">登录</button>
+        <input type="text" id="username" placeholder="Username">
+        <input type="password" id="password" placeholder="Password">
+        <button id="registerBtn">Register</button>
+        <button id="loginBtn">Login</button>
         <p id="login-msg"></p>
     </div>
 
-    <div id="game-box" style="display:none;">
+    <div id="game-box" class="hidden">
         <h2>Memory Match</h2>
-        <div id="score">分数: 0</div>
+        <div id="score">Time: 00:00:00</div>
         <div id="board"></div>
-        <h3>排行榜</h3>
+        <h3>Leaderboard</h3>
         <ul id="leaderboard"></ul>
-        <button id="startBtn">开始游戏</button>
+        <button id="startBtn">Start Game</button>
+        <button id="logoutBtn">Logout</button>
     </div>
+
+    <!-- Footer / Notice -->
+    <footer id="notice">
+        ⚠️ Free server limitation: 15min auto-sleep. After restart, logging in and updating the leaderboard may take
+        some time — please be patient.
+    </footer>
 
     <script src="script.js"></script>
 </body>

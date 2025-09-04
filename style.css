@@ -180,3 +180,26 @@ button:hover {
     z-index: -1;
     /* 放到最底层 */
 }
+
+.hidden {
+    display: none;
+}
+
+/* Footer / Notice */
+#notice {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    padding: 14px 16px;
+    font-size: 16px;
+    /* 字体更大 */
+    text-align: center;
+    background: rgba(0, 0, 0, 0.7);
+    /* 更深一点，突出 */
+    color: #fff;
+    font-style: italic;
+    line-height: 1.6;
+    /* 内容更高、更易读 */
+    z-index: 1000;
+}

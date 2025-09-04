@@ -23,7 +23,12 @@ document.getElementById("registerBtn").addEventListener("click", () => {
     const user = document.getElementById("username").value.trim();
     const pass = document.getElementById("password").value;
 
-    fetch("https://memory-match-backend.onrender.com/register", {
+    if (!user || !pass) {
+        document.getElementById("login-msg").innerText = "Username and password cannot be empty";
+        return;
+    }
+
+    fetch("http://127.0.0.1:5000/register", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ username: user, password: pass })
@@ -38,7 +43,7 @@ document.getElementById("loginBtn").addEventListener("click", () => {
     const user = document.getElementById("username").value.trim();
     const pass = document.getElementById("password").value;
 
-    fetch("https://memory-match-backend.onrender.com/login", {
+    fetch("http://127.0.0.1:5000/login", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ username: user, password: pass })
@@ -48,11 +53,28 @@ document.getElementById("loginBtn").addEventListener("click", () => {
             document.getElementById("login-msg").innerText = data.msg;
             if (data.success) {
                 username = user;
-                document.getElementById("login-box").style.display = "none";
-                document.getElementById("game-box").style.display = "block";
+                document.getElementById("login-box").classList.add("hidden");
+                document.getElementById("game-box").classList.remove("hidden");
+
+                // **显示开始游戏界面，不自动开始**
+                document.getElementById("board").innerHTML = "";    // 清空棋盘
+                document.getElementById("score").innerText = "Time: 00:00:00";
                 updateLeaderboard();
             }
         });
+});
+
+document.getElementById("logoutBtn").addEventListener("click", () => {
+    // 清空本地状态
+    username = "";
+    if (timerInterval) clearInterval(timerInterval);
+
+    // 切换回登录界面
+    document.getElementById("login-box").classList.remove("hidden");
+    document.getElementById("game-box").classList.add("hidden");
+
+    // 清空提示
+    document.getElementById("login-msg").innerText = "Logged out successfully";
 });
 
 /* ====== 开始游戏 ====== */
@@ -65,13 +87,13 @@ function startGame() {
 
     // 计时清零 + 启动
     const scoreDiv = document.getElementById("score");
-    scoreDiv.innerText = "用时: 00:00:00";
+    scoreDiv.innerText = "Time: 00:00:00";
     scoreDiv.style.color = "#000";
     startTime = Date.now();
     if (timerInterval) clearInterval(timerInterval);
     timerInterval = setInterval(() => {
         const elapsed = Date.now() - startTime;
-        scoreDiv.innerText = `用时: ${formatMs(elapsed)}`;
+        scoreDiv.innerText = `Time: ${formatMs(elapsed)}`;
     }, 50);
 
     // 生成牌
@@ -144,9 +166,9 @@ function checkGameEnd() {
         records.sort((a, b) => a.ms - b.ms);
 
         // 显示最终成绩
-        document.getElementById("score").innerText = `用时: ${formatMs(elapsedMs)}`;
+        document.getElementById("score").innerText = `Time: ${formatMs(elapsedMs)}`;
 
-        fetch("https://memory-match-backend.onrender.com/submit", {
+        fetch("http://127.0.0.1:5000/submit", {
             method: "POST",
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify({ username, ms: elapsedMs })
@@ -158,14 +180,14 @@ function checkGameEnd() {
 
 /* ====== 排行榜 ====== */
 function updateLeaderboard() {
-    fetch("https://memory-match-backend.onrender.com/leaderboard")
+    fetch("http://127.0.0.1:5000/leaderboard")
         .then(res => res.json())
         .then(data => {
             const lb = document.getElementById("leaderboard");
             lb.innerHTML = "";
             data.forEach((item, i) => {
                 const li = document.createElement("li");
-                li.innerText = `${i + 1}. ${item.username} 用时: ${formatMs(item.ms)}`;
+                li.innerText = `${i + 1}. ${item.username} Time: ${formatMs(item.ms)}`;
                 lb.appendChild(li);
             });
         });
