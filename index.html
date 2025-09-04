@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Memory Match</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+    <!-- Canvas 绘制背景 -->
+    <canvas id="mountain-canvas"></canvas>
+
+    <div id="login-box">
+        <input type="text" id="username" placeholder="用户名">
+        <input type="password" id="password" placeholder="密码">
+        <button id="registerBtn">注册</button>
+        <button id="loginBtn">登录</button>
+        <p id="login-msg"></p>
+    </div>
+
+    <div id="game-box" style="display:none;">
+        <h2>Memory Match</h2>
+        <div id="score">分数: 0</div>
+        <div id="board"></div>
+        <h3>排行榜</h3>
+        <ul id="leaderboard"></ul>
+        <button id="startBtn">开始游戏</button>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+
+</html>
