@@ -77,6 +77,30 @@ document.getElementById("logoutBtn").addEventListener("click", () => {
     document.getElementById("login-msg").innerText = "Logged out successfully";
 });
 
+document.getElementById("deleteAccountBtn").onclick = async () => {
+    const confirm1 = confirm("Are you sure you want to delete your account? This action cannot be undone!");
+    if (!confirm1) return;
+    const confirm2 = confirm("Please confirm again: Once deleted, your account and scores will be permanently removed!");
+    if (!confirm2) return;
+
+    const username = document.getElementById("username").value;
+    const password = prompt("Please enter your password to confirm:");
+
+    const res = await fetch("https://memory-match-backend.onrender.com/delete_account", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ username, password })
+    });
+    const data = await res.json();
+    alert(data.msg);
+
+    if (data.success) {
+        // 注销成功后回到登录界面
+        document.getElementById("game-box").style.display = "none";
+        document.getElementById("login-box").style.display = "block";
+    }
+};
+
 /* ====== 开始游戏 ====== */
 document.getElementById("startBtn").addEventListener("click", startGame);
 
